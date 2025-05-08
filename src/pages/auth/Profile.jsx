@@ -1,9 +1,11 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import {UserContext} from "../../context/UserContext.jsx";
 
 const Profile = () => {
     const userToken = JSON.parse(localStorage.getItem("token"));
+    const [user, setUser] = useContext(UserContext);
     const navigate = useNavigate();
     const url = "http://localhost:8081/api/authenticated/update";
 
@@ -38,6 +40,7 @@ const Profile = () => {
     const handleSuccess = (response) => {
         alert(`${response.profile.firstName}!, your profile was updated successfully`);
         localStorage.removeItem("token");
+        setUser(response);
         if (response.profile.role === "STUDENT") {
             navigate("/student/dashboard");
         }
