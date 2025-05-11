@@ -74,6 +74,8 @@ const Profile = () => {
         localStorage.setItem("status", JSON.stringify("login"));
         if (response.profile.role === "STUDENT") {
             navigate("/student/dashboard");
+        } else {
+            navigate("/teacher/dashboard");
         }
     };
 

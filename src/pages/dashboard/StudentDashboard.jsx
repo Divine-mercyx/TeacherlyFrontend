@@ -37,7 +37,7 @@ const StudentDashboard = () => {
     })
 
     const fetchTeachers = (search) => {
-        return teachers.filter(teacher => teacher.profile.firstName.toLowerCase().includes(search.toLowerCase()) || teacher.profile.lastName.toLowerCase().includes(search.toLowerCase()));
+        return teachers.filter(teacher => teacher.profile.firstName.toLowerCase().includes(search.toLowerCase().trim()) || teacher.profile.lastName.toLowerCase().includes(search.toLowerCase().trim()));
     }
 
     const filteredTeachers = fetchTeachers(search);
@@ -66,7 +66,7 @@ const StudentDashboard = () => {
 
     return (
         <>
-            <div className="student-dashboard">
+            <div className="student-container">
                 <Sidebar sidebarActive={sidebarActive} toggleSidebar={toggleSidebar} />
                 <div className="main-content">
                     <Header toggleSidebar={toggleSidebar} firstName={user.profile.firstName} lastName={user.profile.lastName} image={user.profile.imageUrl} setSearch={setSearch} search={search} />
@@ -78,7 +78,7 @@ const StudentDashboard = () => {
                     </div>
                     <p style={{ textAlign: "right", marginTop: "30px", marginRight: "40px" }}>
                         <button onClick={() => showingAll ? showLess() : showAll()} style={{ padding: "10px" }} className="btn btn-primary btn-sm subscribe-btn">
-                            <i className="fas fa-user-plus"></i> See More
+                            <i className="fas fa-user-plus"></i> { showingAll ? ("Show less") : ("Show more")}
                         </button>
                     </p>
                     <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Download videos</h3>
