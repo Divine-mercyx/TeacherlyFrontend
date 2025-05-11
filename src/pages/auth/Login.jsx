@@ -28,11 +28,22 @@ const Login = () => {
         localStorage.setItem("token", JSON.stringify({ token: response.token, id: response.id }));
         setUser(response);
         alert("login successfully");
-        navigate("/profile/setup");
+        localStorage.setItem("status", JSON.stringify("login"));
+        if (response.profile === null) {
+            navigate("/profile/setup");
+        }
+
+        if (response.profile.role === "TEACHER") {
+            navigate("/teacher/dashboard");
+        } else if (response.profile.role === "STUDENT") {
+            navigate("/student/dashboard");
+        } else {
+            alert("role not set");
+        }
     }
 
     const failure = (response) => {
-        const errorMessage = response.response.data.includes("An error occurred user not found with email") ? "invalid email or password" : "an error ocurred, try again";
+        const errorMessage = response.response.message.includes("An error occurred user not found with email") ? "invalid email or password" : "an error ocurred, try again";
         alert(errorMessage);
     }
 
