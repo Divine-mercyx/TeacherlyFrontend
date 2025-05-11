@@ -43,7 +43,7 @@ const Login = () => {
     }
 
     const failure = (response) => {
-        const errorMessage = response.response.message.includes("An error occurred user not found with email") ? "invalid email or password" : "an error ocurred, try again";
+        const errorMessage = response.response.data.includes("An error occurred user not found with email") ? "invalid email or password" : "an error ocurred, try again";
         alert(errorMessage);
     }
 
