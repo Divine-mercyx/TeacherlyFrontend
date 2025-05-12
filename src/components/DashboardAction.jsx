@@ -1,9 +1,10 @@
 
-const DashboardAction = () => {
+const DashboardAction = (props) => {
+    const { setIsModalOpen } = props;
     return (
         <>
             <div className="dashboard-actions">
-                <button className="btn btn-primary" id="upload-video-btn">
+                <button onClick={() => setIsModalOpen(true)} className="btn btn-primary" id="upload-video-btn">
                     <i className="fas fa-plus"></i> Upload New Video
                 </button>
                 <button className="btn btn-outline">

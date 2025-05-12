@@ -58,7 +58,8 @@ const StudentDashboard = () => {
          await axios.post("http://localhost:8081/api/authenticated/videos", {token: user.token, id: user.id})
             .then(res => setVideos(res.data))
             .catch(err => console.log(err));
-        const videos2 = videos.filter(video => video.user.id !== userId);
+        const videos2 = videos.filter(video => video.ownerId === userId);
+        console.log(videos2);
         setUserVideos(videos2);
         setNotFoundMessage(videos2.length > 0 ? "" : `${videoOwner} haven't posted any video`);
     }
@@ -70,11 +71,14 @@ const StudentDashboard = () => {
                 <Sidebar sidebarActive={sidebarActive} toggleSidebar={toggleSidebar} />
                 <div className="main-content">
                     <Header toggleSidebar={toggleSidebar} firstName={user.profile.firstName} lastName={user.profile.lastName} image={user.profile.imageUrl} setSearch={setSearch} search={search} />
-                    <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Popular Teachers</h3>
+                    <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>{search.length > 0 ? "Results" : "Popular Teachers"}</h3>
                     <div style={{ paddingLeft: "30px", marginTop: "30px" }} className="teachers-grid">
-                        {filteredTeachers.slice(0, limit).map((teacher, index) => (
+                        { teachers.length > 0 ? (
+                            filteredTeachers.slice(0, limit).map((teacher, index) => (
                             <TeacherCard key={index} teacher={teacher} fetchVideo={fetchVideos} />
-                        ))}
+                        ))
+                        ): (<p style={{ textAlign: "center", marginTop: "100px" }}>No teachers for now</p>)
+                        }
                     </div>
                     <p style={{ textAlign: "right", marginTop: "30px", marginRight: "40px" }}>
                         <button onClick={() => showingAll ? showLess() : showAll()} style={{ padding: "10px" }} className="btn btn-primary btn-sm subscribe-btn">
@@ -83,7 +87,9 @@ const StudentDashboard = () => {
                     </p>
                     <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Download videos</h3>
                     { userVideos.length > 0 ? (
-                        <p>videos</p>
+                        userVideos.map((video, index) => (
+                            <p>videos</p>
+                        ))
                     ):
                         <p style={{ textAlign: "center", marginTop: "100px" }}>{notFoundMessage}</p>
                     }

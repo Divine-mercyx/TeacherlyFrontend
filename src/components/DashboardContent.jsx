@@ -2,8 +2,9 @@ import {useContext} from "react";
 import {UserContext} from "../context/UserContext.jsx";
 import DashboardAction from "./DashboardAction.jsx";
 
-const DashboardContent = () => {
+const DashboardContent = (props) => {
     const [user, setUser] = useContext(UserContext);
+    const {setIsModalOpen} = props;
     return (
         <>
             <div className="dashboard-content">
@@ -62,7 +63,7 @@ const DashboardContent = () => {
                         </div>
                     </div>
                 </div>
-                <DashboardAction />
+                <DashboardAction setIsModalOpen={setIsModalOpen}  />
             </div>
         </>
     )

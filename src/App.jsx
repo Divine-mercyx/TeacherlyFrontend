@@ -4,10 +4,9 @@ import {Route, Routes, useNavigate} from "react-router-dom";
 import Signup from "./pages/auth/Signup.jsx";
 import Profile from "./pages/profile/Profile.jsx";
 import StudentDashboard from "./pages/dashboard/StudentDashboard.jsx";
-import TeacherDashboard from "./pages/dashboard/TeacherDashboard.jsx";
 import {useContext} from "react";
 import {UserContext} from "./context/UserContext.jsx";
-
+import TeacherDashboard from "./pages/dashboard/TeacherDashboard.jsx";
 function App() {
     const [user, setUser] = useContext(UserContext);
     const navigate = useNavigate();
