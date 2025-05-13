@@ -86,13 +86,27 @@ const StudentDashboard = () => {
                         </button>
                     </p>
                     <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Download videos</h3>
-                    { userVideos.length > 0 ? (
-                        userVideos.map((video, index) => (
-                            <p>videos</p>
-                        ))
-                    ):
-                        <p style={{ textAlign: "center", marginTop: "100px" }}>{notFoundMessage}</p>
-                    }
+                    { userVideos.length > 0 ? ("") : (<p style={{ textAlign: "center", marginTop: "100px" }}>{notFoundMessage}</p>) }
+                        <div style={{ paddingLeft: "30px", marginTop: "30px" }} className="teachers-grid">
+                            { userVideos.length > 0 ? (
+                                userVideos.map((video, index) => (
+                                    <div key={index} style={{ padding: "0%" }} className="teacher-card">
+                                        <video width="100%" height="240" controls>
+                                            <source src={video.url} type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                        <p className="teacher-stats">
+                                            {video.title}
+                                        </p>
+                                        <a href="" download={video.url} type="mp4">
+                                            download
+                                        </a>
+                                    </div>
+                                ))
+                            ):
+                                <p style={{ textAlign: "center", marginTop: "100px" }}></p>
+                            }
+                        </div>
                 </div>
             </div>
         </>

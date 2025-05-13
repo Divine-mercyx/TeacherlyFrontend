@@ -47,6 +47,7 @@ const TeacherDashboard = () => {
             try {
                 const response = await axios.post(`https://api.cloudinary.com/v1_1/dwl4mne3y/video/upload`, formDataVideo);
                 videoUrl = response.data.secure_url;
+                console.log(response.data);
             } catch (error) {
                 alert("Error uploading video to Cloudinary");
                 return;
