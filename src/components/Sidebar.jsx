@@ -41,16 +41,13 @@ const Sidebar = (props) => {
                 <nav className="sidebar-nav">
                     <ul>
                         <li className="active"><a href="#"><i className="fas fa-home"></i> Dashboard</a></li>
-                        <li><a href="#"><i className="fas fa-play-circle"></i> Explore</a></li>
-                        <li><a href="#"><i className="fas fa-bookmark"></i> Saved</a></li>
-                        <li><a href="#"><i className="fas fa-history"></i> History</a></li>
-                        <li><a href="#"><i className="fas fa-user-friends"></i> Subscriptions</a></li>
-                        <li><a href="#"><i className="fas fa-cog"></i> Settings</a></li>
+                        <li className=""><a className="logout-btn" onClick={() => logout()}><i className="fas fa-sign-out-alt"></i> Logout</a></li>
+                        <li className=""><button className="delete-account-btn"><i className="fas fa-trash-alt"></i> Delete Account</button></li>
                     </ul>
                 </nav>
                 <div className="sidebar-footer">
-                    <a className="logout-btn" onClick={() => logout()}><i className="fas fa-sign-out-alt"></i> Logout</a>
-                    <button className="delete-account-btn"><i className="fas fa-trash-alt"></i> Delete Account</button>
+
+
                 </div>
             </aside>
         </>

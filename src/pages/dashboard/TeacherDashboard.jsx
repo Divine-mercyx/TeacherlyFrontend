@@ -47,7 +47,6 @@ const TeacherDashboard = () => {
             try {
                 const response = await axios.post(`https://api.cloudinary.com/v1_1/dwl4mne3y/video/upload`, formDataVideo);
                 videoUrl = response.data.secure_url;
-                console.log(response.data);
             } catch (error) {
                 alert("Error uploading video to Cloudinary");
                 return;
@@ -58,7 +57,8 @@ const TeacherDashboard = () => {
             token: user.token,
             id: user.id,
             video: {
-                ...formData,
+                title: formData.category,
+                description: formData.description,
                 url: videoUrl
             }
         };
@@ -74,12 +74,10 @@ const TeacherDashboard = () => {
     }
 
     const handleSuccess = (data) => {
-        console.log(data);
         alert(`${user.profile.firstName}, your post was saved successfully`);
     }
 
     const handleError = (err) => {
-        console.log(err);
         alert("There was an error saving your post.");
     }
 

@@ -5,6 +5,7 @@ import {UserContext} from "../../context/UserContext.jsx";
 import Header from "../../components/Header.jsx";
 import TeacherCard from "../../components/TeacherCard.jsx";
 import axios from "axios";
+import Video from "../../components/Video.jsx";
 
 const StudentDashboard = () => {
     const navigate = useNavigate();
@@ -55,14 +56,25 @@ const StudentDashboard = () => {
     }
 
     const fetchVideos = async (userId, videoOwner) => {
-         await axios.post("http://localhost:8081/api/authenticated/videos", {token: user.token, id: user.id})
-            .then(res => setVideos(res.data))
-            .catch(err => console.log(err));
-        const videos2 = videos.filter(video => video.ownerId === userId);
-        console.log(videos2);
-        setUserVideos(videos2);
-        setNotFoundMessage(videos2.length > 0 ? "" : `${videoOwner} haven't posted any video`);
+        try {
+            const response = await axios.post("http://localhost:8081/api/authenticated/videos", {
+                token: user.token,
+                id: user.id
+            });
+
+            const videos2 = response.data.filter(video => video.ownerId === userId);
+            setUserVideos(videos2);
+
+            if (videos2.length > 0) {
+                setNotFoundMessage("");
+            } else {
+                setNotFoundMessage(`${videoOwner} hasn't posted any video`);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
+
 
 
     return (
@@ -82,26 +94,15 @@ const StudentDashboard = () => {
                     </div>
                     <p style={{ textAlign: "right", marginTop: "30px", marginRight: "40px" }}>
                         <button onClick={() => showingAll ? showLess() : showAll()} style={{ padding: "10px" }} className="btn btn-primary btn-sm subscribe-btn">
-                            <i className="fas fa-user-plus"></i> { showingAll ? ("Show less") : ("Show more")}
+                            { showingAll ? ("Show less") : ("Show more")}
                         </button>
                     </p>
-                    <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Download videos</h3>
+                    <h3 style={{ paddingLeft: "30px", marginTop: "10px" }}>Watch & Download videos</h3>
                     { userVideos.length > 0 ? ("") : (<p style={{ textAlign: "center", marginTop: "100px" }}>{notFoundMessage}</p>) }
                         <div style={{ paddingLeft: "30px", marginTop: "30px" }} className="teachers-grid">
                             { userVideos.length > 0 ? (
                                 userVideos.map((video, index) => (
-                                    <div key={index} style={{ padding: "0%" }} className="teacher-card">
-                                        <video width="100%" height="240" controls>
-                                            <source src={video.url} type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                        <p className="teacher-stats">
-                                            {video.title}
-                                        </p>
-                                        <a href="" download={video.url} type="mp4">
-                                            download
-                                        </a>
-                                    </div>
+                                    <Video index={index} key={index} video={video} />
                                 ))
                             ):
                                 <p style={{ textAlign: "center", marginTop: "100px" }}></p>
